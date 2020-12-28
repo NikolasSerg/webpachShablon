@@ -1,0 +1,9 @@
+@import "vendor";
+@import "fonts";
+@import "variables";
+@import "mixin";
+
+body {
+    color:  $base-color;
+background-color: green; 
+}
