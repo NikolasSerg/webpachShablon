@@ -43,14 +43,22 @@ module.exports = {
                     'css-loader',
                     'sass-loader'
                 ],
-              }
+            },
+            {
+                test:/\.(png|jpg|svg|gif)$/,
+                loader: 'file-loader',
+                options: {
+                    publicPath: 'assets'
+                }
+            }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             minfy: {
                 collapseWhitespace: isProd
-            }
+            },
+            template: '/index.html'
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
