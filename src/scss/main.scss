@@ -2,18 +2,23 @@
 @import "fonts";
 @import "variables";
 @import "mixin";
-
+// @import url('../assets/facebook.png');
 body {
-    color:  $base-color;
-background-color: green; 
+    color: $base-color;
+    background-color: green;
 }
 
 .img {
-    background-image: url('./facebook.png');
-
-    // background-color:blue;
+    // background-image: url(url);
+    // background-color: blue;
     border: 2px solid black;
     background-size: cover;
     height: 150px;
     width: 150px;
+}
+
+.proba-sass {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 100px;
 }

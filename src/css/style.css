@@ -1,4 +1,19 @@
+@import "fonts.css";
 p {
     color: red;
-    font-size: 30px;
+    font-size: 50px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+}
+
+span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: italic;
+}
+
+.dubl {
+    background-image: url("../assets/facebook.png");
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
 }

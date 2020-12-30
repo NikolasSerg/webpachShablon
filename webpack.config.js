@@ -2,12 +2,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const CopyPlugin = require("copy-webpack-plugin");
 
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const filename = (ext) => isDev ? `[name].${ext}`: `[name].[contenthash].${ext}`;
+const filename = (ext) => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -18,38 +19,54 @@ module.exports = {
     output: {
         filename: `${filename('js')}`,
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/dist'
+        // publicPath: path.resolve(__dirname, 'src'),
+        publicPath: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-        historyApiFallback: true,
+        // historyApiFallback: true,
         contentBase: path.resolve(__dirname, 'dist'),
         open: true,
-        compress: true,
+        // compress: true,
         hot: true,
         port: 8000
     },
     module: {
-        rules: [
+        rules: [{
+                test: /\.html$/i,
+                loader: 'html-loader',
+            },
             {
-              test: /\.css$/i,
-              use: [
-                MiniCssExtractPlugin.loader,  
-                'css-loader'],
+                test: /\.css$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ],
             },
             {
                 test: /\.s[ca]ss$/i,
                 use: [
-                    MiniCssExtractPlugin.loader, 
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader'
                 ],
             },
             {
-                test:/\.(png|jpg|svg|gif)$/,
-                loader: 'file-loader',
-                options: {
-                    publicPath: 'assets'
-                }
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: `/img/${filename('[ext]')}`
+                    }
+                }]
+            },
+            {
+                test: /\.(ttf|woff|woff2|eot)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: `/fonts/${filename('[ext]')}`
+                    }
+                }]
             }
         ]
     },
@@ -58,11 +75,17 @@ module.exports = {
             minfy: {
                 collapseWhitespace: isProd
             },
-            template: '/index.html'
+            template: 'index.html'
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: `${filename('css')}`
+            filename: `/css/${filename('css')}`
         })
+        // new CopyPlugin({
+        //     patterns: [{
+        //         from: path.resolve(__dirname, "src/assets"),
+        //         to: path.resolve(__dirname, "dist/assets")
+        //     }],
+        // }),
     ]
-} 
+}
