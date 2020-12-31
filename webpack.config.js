@@ -20,7 +20,8 @@ module.exports = {
         filename: `${filename('js')}`,
         path: path.resolve(__dirname, 'dist'),
         // publicPath: path.resolve(__dirname, 'src'),
-        publicPath: path.resolve(__dirname, 'dist'),
+        // publicPath: path.resolve(__dirname, 'dist'),
+        publicPath: ""
     },
     devServer: {
         // historyApiFallback: true,
@@ -55,7 +56,7 @@ module.exports = {
                 use: [{
                     loader: 'file-loader',
                     options: {
-                        name: `/img/${filename('[ext]')}`
+                        name: `./img/${filename('[ext]')}`
                     }
                 }]
             },
@@ -64,7 +65,7 @@ module.exports = {
                 use: [{
                     loader: 'file-loader',
                     options: {
-                        name: `/fonts/${filename('[ext]')}`
+                        name: `./fonts/${filename('[ext]')}`
                     }
                 }]
             }
@@ -75,12 +76,12 @@ module.exports = {
             minfy: {
                 collapseWhitespace: isProd
             },
-            template: 'index.html'
+            template: path.resolve(__dirname, 'src/index.html')
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: `/css/${filename('css')}`
-        })
+            filename: `./css/${filename('css')}`
+        }),
         // new CopyPlugin({
         //     patterns: [{
         //         from: path.resolve(__dirname, "src/assets"),
